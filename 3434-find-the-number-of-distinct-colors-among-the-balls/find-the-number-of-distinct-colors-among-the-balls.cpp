@@ -4,7 +4,7 @@ public:
       vector<int> result;
         unordered_map<int, int> mp; 
         unordered_map<int, int> freq; 
-        // unordered_set<int> s1;  
+      
         
         for (vector<int> i : queries) {
             int key = i[0], value = i[1];
@@ -19,8 +19,6 @@ public:
            
             mp[key] = value;
             freq[value]++;
-            // s1.insert(value);
-
             result.push_back(freq.size());
         }
 
