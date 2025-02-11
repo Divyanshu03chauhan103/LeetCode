@@ -28,6 +28,8 @@ public:
 
         */
 
+       /*
+       Approach 2:
         stack<char>st;
         int n=s.length();
         int N=part.length();
@@ -53,5 +55,18 @@ public:
             st.pop();
         }
             return result;
+        */
+
+        string result="";
+
+        int i=0;
+        int n=s.length();
+        while(i<n){
+            result+=s[i];
+            if(result.length()>=part.length() && result.substr(result.length()-part.length())==part)
+                result.erase(result.length()-part.length());
+            i++;
+        }
+        return result;
     }
 };
