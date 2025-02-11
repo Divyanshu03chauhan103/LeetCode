@@ -1,7 +1,20 @@
 class Solution {
 public:
+    bool check(stack<char>st,int index,string part){
+        stack<char>temp=st;
+        int j=index-1;
+        while(j>=0){
+            if(temp.top()!=part[j])
+                return false;
+            temp.pop();
+            j--;
+        }
+
+        return true;
+    }
     string removeOccurrences(string s, string part) {
-        
+        /*
+        Approach 1: o(n^2)
         while(true){
 
             int index=s.find(part);
@@ -12,5 +25,33 @@ public:
             s.erase(index,part.length());
         }
         return s;
+
+        */
+
+        stack<char>st;
+        int n=s.length();
+        int N=part.length();
+        int i=0;
+        while(i<n){
+            st.push(s[i]);
+            
+            if(st.size()>=part.length() && check(st,N,part))
+            {
+                int j=0;
+                while(!st.empty() && j<N){
+                    st.pop();
+                    j++;
+                }      
+            }
+            i++;
+        }   
+
+        string result="";
+
+        while(!st.empty()){
+            result =  st.top()+result;
+            st.pop();
+        }
+            return result;
     }
 };
