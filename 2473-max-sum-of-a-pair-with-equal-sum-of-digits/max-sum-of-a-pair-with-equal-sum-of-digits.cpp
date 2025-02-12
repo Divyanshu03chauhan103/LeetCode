@@ -11,21 +11,34 @@ public:
     }
 
     int maximumSum(vector<int>& nums) {
-        
+        //Approach 1:
+        // int n= nums.size();
+        // unordered_map<int,int>mp;
+        // int result =-1;
+        // for(int i=0;i<n;i++){
+            
+        //     int sum= digitSum(nums[i]);
+        //     if(mp.find(sum)!=mp.end()){
+            
+        //     result = max(result,nums[i]+mp[sum]);
+        //     mp[sum]=max(mp[sum],nums[i]);
+        //     }
+        //     else
+        //         mp[sum] = nums[i];
+        // }
+        // return result;
+
         int n= nums.size();
-        unordered_map<int,int>mp;
+        int mp[82]={0};
         int result =-1;
         for(int i=0;i<n;i++){
             
             int sum= digitSum(nums[i]);
-            if(mp.find(sum)!=mp.end()){
-            
-            result = max(result,nums[i]+mp[sum]);
+            if(mp[sum])
+                result = max(result,nums[i]+mp[sum]);
             mp[sum]=max(mp[sum],nums[i]);
-            }
-            else
-                mp[sum] = nums[i];
-        }
+            
+        }      
         return result;
     }
 };
