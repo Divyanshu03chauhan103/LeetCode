@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<vector<string>>result;
+   
     int N;
     bool isvalid(int row,int col,vector<string>Board){
 
@@ -20,7 +20,7 @@ public:
         return true;
     }
     
-    void solve(vector<string>Board,int row){
+    void solve( vector<vector<string>>&result,vector<string>Board,int row){
 
         if(row>=N) {
 
@@ -33,7 +33,7 @@ public:
             if(isvalid(row,i,Board))
                 {
                     Board[row][i]='Q';
-                    solve(Board,row+1);
+                    solve(result,Board,row+1);
                     Board[row][i]='.';
                 }
         }
@@ -41,9 +41,10 @@ public:
     
     vector<vector<string>> solveNQueens(int n) {
         if(n==0) return {};
+         vector<vector<string>>result;
         N=n;
      vector<string>Board(n,string(n,'.'));
-        solve(Board,0);
+        solve(result,Board,0);
      return result;   
     }
 };
