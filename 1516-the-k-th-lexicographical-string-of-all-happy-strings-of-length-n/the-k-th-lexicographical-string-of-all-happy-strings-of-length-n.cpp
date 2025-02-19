@@ -8,10 +8,10 @@ public:
 
         return true;
     }
-    void solve(string s,string curr,int n,set<string>&result){
+    void solve(string s,string curr,int n,vector<string>&result){
 
          if(curr.size() == n) {
-            result.insert(curr);
+            result.push_back(curr);
             return;
         }
         for(int i=0;i<s.size();i++){
@@ -25,19 +25,11 @@ public:
     string getHappyString(int n, int k) {
         
         string s ="abc";
-        set<string>result;
+        vector<string>result;
 
         solve(s,"",n,result);
 
-        int count = 1;
-        
-        for(auto i :result ){
-            
-            if(count==k){
-                return i;
-            }
-            count++;
-        }
-        return "";
+        sort(result.begin(),result.end());
+        return (k >  result.size())? "":result[k-1];
     }
 };
