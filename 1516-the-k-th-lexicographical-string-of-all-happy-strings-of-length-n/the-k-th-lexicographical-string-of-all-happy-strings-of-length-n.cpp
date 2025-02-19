@@ -4,7 +4,7 @@ public:
 
         if(curr.empty()) return true;
 
-        if(curr[curr.size()-1]==c) return false;
+        if(curr.back()==c) return false;
 
         return true;
     }
