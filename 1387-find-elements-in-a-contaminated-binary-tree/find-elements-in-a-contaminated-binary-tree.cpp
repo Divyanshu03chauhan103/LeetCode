@@ -12,9 +12,9 @@
 class FindElements {
 public:
     unordered_set<int>s;
-    TreeNode* head;
+    // TreeNode* head;
     FindElements(TreeNode* root) {
-        head=root;
+        // head=root;
        dfs(root,0);
 
     }
@@ -27,18 +27,18 @@ public:
         dfs(root->left,2*x+1);
         dfs(root->right,2*x+2);
     }
-    bool solve(TreeNode* root, int target){
+    // bool solve(TreeNode* root, int target){
 
-        if(!root) return false;
-        if(root->val == target) return true;
+    //     if(!root) return false;
+    //     if(root->val == target) return true;
         
-        return solve(root->left,target)||
-        solve(root->right,target);
+    //     return solve(root->left,target)||
+    //     solve(root->right,target);
 
-    }
+    // }
     bool find(int target) {
         
-        return solve(head,target);
+        return s.count(target);
     }
 };
 
