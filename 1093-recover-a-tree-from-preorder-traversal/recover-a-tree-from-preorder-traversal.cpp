@@ -12,7 +12,7 @@
 class Solution {
 public:
 
-    TreeNode* solve(int depth,int &i,string &s){
+    TreeNode* solve(int &depth,int &i,string &s){
 
         if(i>=s.length())
             return NULL;
@@ -35,9 +35,10 @@ public:
         }
 
         TreeNode* currNode= new TreeNode(num);
-
-        currNode->left = solve(depth+1,i,s);
-        currNode->right=solve(depth+1,i,s);
+        depth++;
+        currNode->left = solve(depth,i,s);
+        currNode->right=solve(depth,i,s);
+        depth--;
         return currNode;
         }
     TreeNode* recoverFromPreorder(string traversal) {
