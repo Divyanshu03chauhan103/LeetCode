@@ -4,7 +4,7 @@ public:
         
         int n= intervals.size();
         int count=1;
-        sort(intervals.begin(),intervals.end(),[](vector<int>a,vector<int>b){
+        sort(intervals.begin(),intervals.end(),[&](vector<int>a,vector<int>b){
 
             return a[1]<b[1];
         });
