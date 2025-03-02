@@ -28,7 +28,7 @@ public:
         }
   
         swap(nums[index - 1], nums[j]);
-
+        //reverse the number starting from the index, because the elements are in descending order in the suffix
         reverse(nums.begin() + index, nums.end());
     }
 };
