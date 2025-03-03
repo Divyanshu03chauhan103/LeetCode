@@ -16,9 +16,9 @@ public:
             ub=min(ub,bounds[i][1]);
         }
 
-        int count = ub-lb+1;
+      
 
-        return count>0? count:0;
+        return ub-lb+1>0? ub-lb+1:0;
 
 
     }
