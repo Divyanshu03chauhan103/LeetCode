@@ -2,7 +2,7 @@ class Solution {
 public:
     void isPrime(vector<int>&result,int left,int right){
 
-        vector<bool>check(1000001,true);
+        vector<bool>check(right+1,true);
 
         for(int i=2;i<=right;i++){
             
