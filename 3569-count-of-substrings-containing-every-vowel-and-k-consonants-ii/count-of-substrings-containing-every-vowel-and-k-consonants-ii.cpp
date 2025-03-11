@@ -1,51 +1,35 @@
 class Solution {
 public:
-    long countOfSubstrings(string word, int k) {
-        return atLeastK(word, k) - atLeastK(word, k + 1);
-    }
+    long long calculate(string s,int k){
 
-private:
-    long atLeastK(string word, int k) {
-        long numValidSubstrings = 0;
-        int start = 0;
-        int end = 0;
-        // Keep track of counts of vowels and consonants.
-        unordered_map<char, int> vowelCount;
-        int consonantCount = 0;
+        int i=0;
+        long long result=0;
+        int a=0,e=0,I=0,u=0,o=0,consonant=0;
+        int j=0;
+        while(j<s.length()){
+            if(s[j]=='a') a++;
+            else if(s[j]=='e') e++;
+            else if(s[j]=='i') I++;
+            else if(s[j]=='o') o++;
+            else if(s[j]=='u') u++;
+            else consonant++;
 
-        // Start sliding window.
-        while (end < word.length()) {
-            // Insert new letter.
-            char newLetter = word[end];
-
-            // Update counts.
-            if (isVowel(newLetter)) {
-                vowelCount[newLetter]++;
-            } else {
-                consonantCount++;
-            }
-
-            // Shrink window while we have a valid substring.
-            while (vowelCount.size() == 5 and consonantCount >= k) {
-                numValidSubstrings += word.length() - end;
-                char startLetter = word[start];
-                if (isVowel(startLetter)) {
-                    if (--vowelCount[startLetter] == 0) {
-                        vowelCount.erase(startLetter);
-                    }
-                } else {
-                    consonantCount--;
+            while(a!=0 && e!=0 && I!=0 && o!=0 && u!=0 && consonant>=k){
+                result+=s.length()-j;
+                if(s[i]=='a') a--;
+                else if(s[i]=='e') e--;
+                else if(s[i]=='i') I--;
+                else if(s[i]=='o') o--;
+                else if(s[i]=='u') u--;
+                else consonant--;
+                i++;
                 }
-                start++;
-            }
-
-            end++;
+                j++;
         }
-
-        return numValidSubstrings;
+        cout<<result;
+        return result;
     }
-
-    bool isVowel(char c) {
-        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    long long countOfSubstrings(string word, int k) {
+        return calculate(word,k)-calculate(word,k+1);
     }
 };
