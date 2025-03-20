@@ -33,11 +33,10 @@ public:
         ListNode* temp = newHead;
         ListNode* prev = NULL;
 
-        // Step 2: Traverse to remove nth node from the reversed list
         while(n-- && temp){
             if(n == 0){
                 if(prev)
-                    prev->next = temp->next;  // Remove the node
+                    prev->next = temp->next;  
                else{
                 newHead=newHead->next;
                }
@@ -48,7 +47,7 @@ public:
             temp = temp->next;
         }
 
-        // Step 3: Reverse back to restore original order
+      
         return reverse(newHead);
     }
 };
