@@ -14,12 +14,12 @@ public:
                 int start = meetings[i][0];
 
                 if(start>end){
-                    cout<<start<<" "<<end;
+                    
                     result+=start-end-1;
                 }
                 end=max(end,meetings[i][1]);
             }
-            cout<<end;
+         
             result+=days-end;
             return result;
     }
