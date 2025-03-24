@@ -6,10 +6,8 @@ public:
         int iniColor = image[sr][sc];
 
         
-        if (iniColor != color) {
             dfs(image, sr, sc, color, iniColor, delr, delc);
-        }
-
+        
         return image;
     }
 
@@ -26,7 +24,7 @@ public:
             int newCol = sc + delc[i];
 
             if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m &&
-                image[newRow][newCol] == iniColor) {
+                image[newRow][newCol] == iniColor && image[newRow][newCol]!=color) {
                 dfs(image, newRow, newCol, color, iniColor, delr, delc);
             }
         }
