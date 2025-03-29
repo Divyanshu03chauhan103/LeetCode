@@ -5,7 +5,7 @@ public:
      
         vector<int>indegree(n+1,0);
         vector<int>outdegree(n+1,0);
-        for(auto i:trust){
+        for(auto &i:trust){
             indegree[i[1]]++;
             outdegree[i[0]]++;
         }
