@@ -17,7 +17,7 @@ public:
                 intervals.push_back(p);
             }
         }
-
+            
         vector<int>result;
         sort(intervals.begin(),intervals.end());
         int first_val=intervals[0].first;
