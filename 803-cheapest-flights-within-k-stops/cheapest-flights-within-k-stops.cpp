@@ -1,10 +1,10 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        // Build the graph
+       
         vector<vector<pair<int, int>>> graph(n);
         for (auto& flight : flights) {
-            graph[flight[0]].push_back({flight[1], flight[2]}); // {destination, price}
+            graph[flight[0]].push_back({flight[1], flight[2]});
         }
         
         // BFS approach with queue
@@ -31,20 +31,18 @@ public:
                 continue;
             }
             
-            // If we've used all allowed stops, don't explore further
+          
             if (stops > k) continue;
             
-            // Explore neighbors
+        
             for (auto& neighbor : graph[node]) {
                 int nextNode = neighbor.first;
                 int edgePrice = neighbor.second;
                 int newPrice = price + edgePrice;
                 
-                // Only proceed if the new price is better than the best known result
-                // and we haven't exceeded stops
+               
                 if (newPrice < result && stops <= k) {
-                    // We only need to visit a node again if we can do it with fewer stops
-                    // or with a cheaper price
+                   
                     if (newPrice < minPrice[nextNode]) {
                         minPrice[nextNode] = newPrice;
                         q.push({newPrice, nextNode, stops + 1});
