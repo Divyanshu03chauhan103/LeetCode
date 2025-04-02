@@ -4,12 +4,12 @@ public:
         int n = heights.size();
         int m = heights[0].size();
 
-        // Min-Heap to store {effort, {row, col}}
+        
         priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> q;
         vector<vector<int>> difference(n, vector<int>(m, 1e9));
         difference[0][0] = 0;
 
-        // 4 possible movement directions
+       
         int drow[] = {+1, 0, -1, 0};
         int dcol[] = {0, +1, 0, -1};
 
@@ -21,7 +21,7 @@ public:
             int col = q.top().second.second;
             q.pop();
 
-            // If we reached the destination, return the minimum effort
+            
             if (row == n - 1 && col == m - 1) return diff;
 
             for (int i = 0; i < 4; i++) {
