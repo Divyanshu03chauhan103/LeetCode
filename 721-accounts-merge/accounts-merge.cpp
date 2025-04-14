@@ -53,7 +53,7 @@ public:
             }
         }
 
-        vector<string>mails[n];
+        vector<vector<string>>mails(n);
         
         for(auto i:mp){
             int node=ds.find(i.second);
