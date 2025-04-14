@@ -35,33 +35,35 @@ class Disjoint{
 class Solution {
 public:
     int removeStones(vector<vector<int>>& stones) {
-        int maxRow = 0, maxCol = 0;
-        for (auto& stone : stones) {
-            maxRow = max(maxRow, stone[0]);
-            maxCol = max(maxCol, stone[1]);
+        
+        int row=0;
+        int col=0;
+
+        for(auto i:stones){
+            row=max(row,i[0]);
+            col=max(col,i[1]);
         }
 
-        // Create DSU for (rows + cols + 1) to avoid overlap
-        Disjoint dsu(maxRow + maxCol + 2);
 
-        unordered_set<int> uniqueNodes;
+        Disjoint Ds(row+col+2);
+        unordered_set<int>st;
 
-        for (auto& stone : stones) {
-            int nodeRow = stone[0];
-            int nodeCol = stone[1] + maxRow + 1; // shift column index to avoid clash with row index
-            dsu.unionbyrank(nodeRow, nodeCol);
+        for(auto i:stones){
+            int node_row=i[0];
+            int node_col=row+1+i[1];
 
-            uniqueNodes.insert(nodeRow);
-            uniqueNodes.insert(nodeCol);
+            Ds.unionbyrank(node_row,node_col);
+            st.insert(node_row);
+            st.insert(node_col);
         }
 
-        int components = 0;
-        for (int node : uniqueNodes) {
-            if (dsu.find(node) == node) {
-                components++;
-            }
+
+        int count=0;
+
+        for(auto i:st){
+            if(Ds.find(i)==i) count++;
         }
 
-        return stones.size() - components;
+        return stones.size()-count;
     }
 };
