@@ -4,7 +4,7 @@ class Disjoint{
         vector<int>parent,size;
         Disjoint(int n){
             parent.resize(n+1);
-            size.resize(n+1,0);
+            size.resize(n+1,1);
 
             for(int i=0;i<n+1;i++){
                 parent[i]=i;
@@ -23,7 +23,7 @@ class Disjoint{
 
             int ult_v=find(v);
             int ult_u=find(u);
-
+            if(ult_v==ult_u) return;
             if(size[ult_v]>size[ult_u]){
                 parent[ult_u]=ult_v;
                 size[ult_v]+=size[ult_u];
@@ -53,7 +53,7 @@ public:
             }
         }
 
-        vector<vector<string>>mails(n);
+        vector<string>mails[n];
         
         for(auto i:mp){
             int node=ds.find(i.second);
