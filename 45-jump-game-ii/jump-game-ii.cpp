@@ -1,21 +1,24 @@
 class Solution {
 public:
-    int jump(vector<int>& nums) {
-        int j=0;
-        int i=0;
-        int n=nums.size();
-        int jump=0;
-        while(j<n-1){
-            int farthest=0;
-            for(int k=i;k<=j;k++){
+    int solve(vector<int>&dp,vector<int>&nums,int i,int n){
+        if(i>=n-1) return 0;
+        if(i==n-2) return dp[i]=1;
 
-                farthest =max(farthest,nums[k]+k);
-            }
+        int min_steps= INT_MAX;
+        if(dp[i]!=-1) return dp[i];
+        for(int j=1;j<=nums[i];j++){
 
-            i=j+1;
-            j=farthest;
-            jump++;
+            int steps=solve(dp,nums,i+j,n);
+            if(steps!=INT_MAX)
+            min_steps=min(steps+1,min_steps);
         }
-        return jump;
+
+        return dp[i]=min_steps;
+    }
+    int jump(vector<int>& nums) {
+        
+        int n=nums.size();
+        vector<int>dp(n,-1);
+        return solve(dp,nums,0,n);
     }
 };
