@@ -1,18 +1,27 @@
 class Solution {
 public:
-    bool canJump(vector<int>& nums) {
-        int n=nums.size();
-        vector<int>dp(n,false);
-        dp[0]=true;
+    bool solve(vector<int>& dp, vector<int>& nums, int i, int n) {
+        if (dp[i] != -1) 
+            return dp[i];              // reuse memoized result
 
-        for(int i=1;i<n;i++){
-            for(int j=i-1;j>=0;j--){
-                if(dp[j] && j+nums[j]>=i){
-                    dp[i]=true;
-                    break;
-                }
-            }
+        if (i == n - 1) 
+            return dp[i] = true;       // at last index → can reach
+
+        if (nums[i] == 0) 
+            return dp[i] = false;      // dead end → cannot reach
+
+        for (int step = 1; step <= nums[i]; ++step) {
+            if (i + step < n && solve(dp, nums, i + step, n))
+                return dp[i] = true;   // found a path → memoize true
         }
-        return dp[n-1];
+
+        return dp[i] = false;          // no path → memoize false
+    }
+
+    bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        solve(dp, nums, 0, n);
+        return dp[0];                  // only dp[0] matters
     }
 };
