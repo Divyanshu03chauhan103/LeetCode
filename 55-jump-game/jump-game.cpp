@@ -1,18 +1,18 @@
 class Solution {
 public:
-    bool canJump(vector<int>& nums) {
+    bool solve(vector<int>&dp,vector<int>&nums,int i,int n){
+        if(i==n-1) return true;
         
-        int max_index=0;
-        int n=nums.size();
-        for(int i=0;i<n;i++){
-
-            if(i>max_index){
-                return false;
-            }
-
-            max_index=max(max_index,i+nums[i]);
+        if(nums[i]==0) return false;
+        if(dp[i]!=-1) return dp[i];
+        for(int idx=1;idx<=nums[i];idx++){
+            if(idx+i<n && solve(dp,nums,i+idx,n)) return dp[i]=true;
         }
-
-        return true;
+        return dp[i]=false;
+        }
+    bool canJump(vector<int>& nums) {
+        int n=nums.size();
+        vector<int>dp(n,-1);
+        return solve(dp,nums,0,n);
     }
 };
