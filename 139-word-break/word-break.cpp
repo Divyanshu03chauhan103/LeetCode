@@ -4,7 +4,7 @@ public:
         if(i>=s.length()) return true;
 
         if(dp[i]!=-1) return dp[i];
-
+        if(st.find(s)!=st.end()) return true;
         for(int j=1;i+j<=s.length();j++){
              
              string temp=s.substr(i,j);
