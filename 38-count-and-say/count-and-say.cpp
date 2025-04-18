@@ -4,6 +4,7 @@ public:
         string result="";
         int count=1;
         char c=s[0];
+        
         for(int i=1;i<s.length();i++){
             if(s[i]==c) count++;
             else{
@@ -30,3 +31,4 @@ public:
         return solve(n);
     }
 };
+
