@@ -2,13 +2,14 @@ class Solution {
 public:
     int maximumPossibleSize(vector<int>& nums) {
 
-        stack<int>st;
-
+        int result=0;
+        int prev=-1;
         for(int i:nums){
-
-            if(st.empty() || i>=st.top()) st.push(i);
-            
+            if(prev<=i){
+                result++;
+                prev=i;
+            }
         }   
-        return st.size();     
+        return result;
     }
 };
