@@ -13,7 +13,7 @@ public:
 
                 j=j/10;
             }
-            cout<<num<<",";
+        
             mp[num]++;
         }
 
