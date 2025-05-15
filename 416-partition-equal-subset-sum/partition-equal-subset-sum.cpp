@@ -7,24 +7,28 @@ public:
         int n = nums.size();
         int target = sum / 2;
 
-        vector<vector<bool>> dp(n, vector<bool>(target + 1, false));
+        vector<bool> dp(target+1,  false);
 
-        for (int i = 0; i < n; ++i) {
-                dp[i][target] = true;
-            }
+            dp[target] = true;
+            
 
         for(int i=n-2;i>=0;i--){
 
+                vector<bool>curr(target+1,false);
+                curr[target]=true;
             for(int partition=target-1;partition>=0;partition--){
                 
                 
-                bool notTake = dp[i + 1][partition];
+                bool notTake = dp[partition];
                 
-                bool take = (partition+nums[i]<=target) ? dp[i + 1][ partition + nums[i]]:false;
-                dp[i][partition]=notTake||take;
+                bool take = (partition+nums[i]<=target) ? dp[ partition + nums[i]]:false;
+
+                curr[partition]=notTake||take;
             }
+            
+            dp=curr;
         }    
 
-        return dp[0][0];
+        return dp[0];
     }
 };
