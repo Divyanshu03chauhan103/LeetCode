@@ -12,7 +12,7 @@ public:
             dp[target] = true;
             
 
-        for(int i=n-2;i>=0;i--){
+        for(int i=n-1;i>=0;i--){
 
                 vector<bool>curr(target+1,false);
                 curr[target]=true;
