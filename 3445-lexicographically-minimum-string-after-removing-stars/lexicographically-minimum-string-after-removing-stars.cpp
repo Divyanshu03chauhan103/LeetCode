@@ -1,34 +1,34 @@
 class Solution {
 public:
     string clearStars(string s) {
-        auto cmp = [](const pair<char, int>& a, const pair<char, int>& b) {
-            if (a.first == b.first) return a.second > b.second; 
-            return a.first < b.first; 
+        
+        auto cmp = [](const pair<char,int>a,const pair<char,int>b){
+            if(a.first == b.first) return a.second<b.second;
+            return a.first>b.first;
         };
+        priority_queue<pair<char,int>,vector<pair<char,int>>,decltype(cmp)>pq;
 
-multiset<pair<char, int>, decltype(cmp)> chars(cmp);
+        int n=s.length();
+        vector<int>removed(n,0);
 
-        vector<bool> removed(s.size(), false);
+        for(int i=0;i<n;i++){
 
-        for (int i = 0; i < s.size(); ++i) {
-            if (s[i] != '*') {
-                chars.insert({s[i], i});
-            } else {
-                if (!chars.empty()) {
-                    auto it = chars.begin();
-                    removed[it->second] = true;
-                    chars.erase(it);
-                }
+            if(s[i]!='*'){
+                pq.push({s[i],i});
+            }else{
+                int ind=pq.top().second;
+                removed[ind]=1;
+                pq.pop();
             }
         }
 
-        string result;
-        for (int i = 0; i < s.size(); ++i) {
-            if (s[i] != '*' && !removed[i]) {
-                result += s[i];
-            }
+        string res="";
+
+        for(int i=0;i<n;i++){
+            if(!removed[i] && s[i]!='*')
+                res+=s[i];
         }
 
-        return result;
+        return res;
     }
 };
