@@ -2,8 +2,11 @@ class Solution {
 public:
     bool canMakeEqual(vector<int>& nums, int k) {
         int n=nums.size();
+
         vector<int>minus1 = nums;
+        
         vector<int>plus1 =nums;
+
         int op1=0,op2 = 0;
         for(int i=0;i<n-1;i++){
             if(minus1[i]==1){
