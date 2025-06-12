@@ -18,6 +18,6 @@ public:
                 after=curr;
             }
         }
-        return curr[1][k];
+        return after[1][k];
     }
 };
