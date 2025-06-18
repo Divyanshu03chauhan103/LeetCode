@@ -1,7 +1,7 @@
 class Solution {
 public:
     bool isPossible(vector<int>arr,int k){
-        if(abs(arr[0]-arr[1])>k || abs(arr[1]-arr[2])>k || abs(arr[2]-arr[0])>k) return false;
+        if(abs(arr[2]-arr[0])>k) return false;
         return true;
     }
     vector<vector<int>> divideArray(vector<int>& nums, int k) {
