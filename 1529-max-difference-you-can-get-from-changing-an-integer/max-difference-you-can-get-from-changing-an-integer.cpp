@@ -56,7 +56,7 @@ public:
         int max_n=stoi(max_ele);
         
         int min_n=findMin(s);
-        cout<<max_n << " "<<min_n;
+
         return max_n-min_n;
     }
 };
