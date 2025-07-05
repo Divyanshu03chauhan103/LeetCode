@@ -2,15 +2,15 @@ class Solution {
 public:
     int findLucky(vector<int>& arr) {
         
-        unordered_map<int,int>mp;
+        vector<int>mp(501,0);
         for(int i:arr){
             mp[i]++;
         }
         int result=-1;
-        for(auto [key,val]:mp){
+        for(int i=1;i<501;i++){
             
-            if(key == val){
-                result=max(result,val);
+            if(i == mp[i]){
+                result=max(result,i);
             }
         }
         return result;
