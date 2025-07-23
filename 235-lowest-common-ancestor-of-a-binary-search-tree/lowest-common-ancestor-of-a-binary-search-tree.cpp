@@ -18,8 +18,9 @@ public:
             return root;
         if(p->val<=root->val && q->val >=root->val)
             return root;
-
-        if(root->right && lowestCommonAncestor(root->left,p,q)) return lowestCommonAncestor(root->left,p,q);    
+        
+        TreeNode* left=lowestCommonAncestor(root->left,p,q);
+        if(left) return left;
         return lowestCommonAncestor(root->right,p,q);
     }
 };
