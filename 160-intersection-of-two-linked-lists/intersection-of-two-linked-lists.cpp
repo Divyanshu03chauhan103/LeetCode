@@ -10,7 +10,7 @@ class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         
-       
+      
         ListNode* temp1=headA;
         ListNode* temp2=headB;
 
@@ -23,6 +23,6 @@ public:
             if(!temp2) temp2=headA;
         }
 
-        return temp1;
+        return temp2;
     }
 };
