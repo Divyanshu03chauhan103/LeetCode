@@ -1,80 +1,50 @@
 class Solution {
-private:
-    int n;
-    
-    // row = i, col = j
-    int dfs3(int row, int col, vector<vector<int>>& mat) {
-        if (row < 0 || col < 0 || row >= n || col >= n) return 0;
-
-        if(memo[row][col] != -1){return memo[row][col];}
-        
-        int val = mat[row][col];
-        int res = 0;
-
-        if (row == col) {
-            res = max(res, dfs3(row + 1, col + 1, mat));
-        }
-        else if (row - 1 == col) {
-            res = max({res,
-                       dfs3(row + 1, col + 1, mat),
-                       dfs3(row, col + 1, mat)});
-        }
-        else {
-            res = max({res,
-                       dfs3(row + 1, col + 1, mat),
-                       dfs3(row, col + 1, mat),
-                       dfs3(row - 1, col + 1, mat)});
-        }
-        
-        return memo[row][col] = val + res;
-    }
-
-    int dfs2(int row, int col, vector<vector<int>>& mat) {
-        if (row < 0 || col < 0 || row >= n || col >= n) return 0;
-
-        if(memo[row][col] != -1){return memo[row][col];}
-        
-        int val = mat[row][col];
-        int res = 0;
-
-        if (row == col) {
-            res = max(res, dfs2(row + 1, col + 1, mat));
-        }
-        else if (row == col - 1) {
-            res = max({res,
-                       dfs2(row + 1, col + 1, mat),
-                       dfs2(row + 1, col, mat)});
-        }
-        else {
-            res = max({res,
-                       dfs2(row + 1, col + 1, mat),
-                       dfs2(row + 1, col, mat),
-                       dfs2(row + 1, col - 1, mat)});
-        }
-        
-        return memo[row][col] = val + res;
-    }
-
 public:
-    vector<vector<int>> memo;
-    int maxCollectedFruits(vector<vector<int>>& mat) {
-        n = mat.size();
-        int total = 0;
+    int maxCollectedFruits(vector<vector<int>>& fruits) {
 
-        memo = vector<vector<int>> (n, vector<int> (n, -1));
-
-        // child - 1
-        // he will eat all diagonal fruits, so set them to 0 
-        for (int i = 0; i < n; i++) {
-            total += mat[i][i];
-            mat[i][i] = 0;
-        }
+        int n=fruits.size();
+        vector<vector<int>>dp(n,vector<int>(n,-1));   
         
-        // child - 2
-        total += dfs3(n - 1, 0, mat);
-        // child - 3
-        total += dfs2(0, n - 1, mat);
+        int child1=0;
+        for(int i=0;i<n;i++){
+            child1+=fruits[i][i];
+        }
 
-        return total;
+        int child2= solveChild2(0,n-1,fruits,dp);
+
+        int child3=solveChild3(n-1,0,fruits,dp);
+
+        return child1+child2+child3;
+        
+    }
+
+    int solveChild2(int i,int j,vector<vector<int>>&fruits,vector<vector<int>>&dp){
+
+        if(j<0 || j>=fruits.size() || i>=fruits.size()) return 0;
+
+        if(i==j || i>j) return 0;
+
+        if(i==fruits.size()-1 && j==fruits.size()-1) return 0;
+
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        int path1=fruits[i][j]+solveChild2(i+1,j-1,fruits,dp);
+        int path2=fruits[i][j]+solveChild2(i+1,j,fruits,dp);
+        int path3=fruits[i][j]+solveChild2(i+1,j+1,fruits,dp);
+
+        return dp[i][j]= max({path1,path2,path3});
+    }
+    int solveChild3(int i,int j,vector<vector<int>>&fruits,vector<vector<int>>&dp){
+
+        if(i<0 || j>=fruits.size() || i>=fruits.size()) return 0;
+        if(i==fruits.size()-1 && j==fruits.size()-1) return 0;
+        if(i==j || i<j) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        int path1=fruits[i][j]+solveChild3(i-1,j+1,fruits,dp);
+        int path2=fruits[i][j]+solveChild3(i,j+1,fruits,dp);
+        int path3=fruits[i][j]+solveChild3(i+1,j+1,fruits,dp);
+
+        return dp[i][j]= max({path1,path2,path3});
     }
 };
