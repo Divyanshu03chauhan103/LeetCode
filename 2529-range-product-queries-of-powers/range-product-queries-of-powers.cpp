@@ -8,8 +8,8 @@ public:
         int N=n;
         
          while (N) {
-            int exp = floor(log2(N));  
-            int num = 1 << exp;        
+            int exp = floor(log2(N));  //gives me highest power less then N
+            int num = 1 << exp;        //calculate the power using left shift
             N = N - num;               
             required.push_back(num);   
         }
