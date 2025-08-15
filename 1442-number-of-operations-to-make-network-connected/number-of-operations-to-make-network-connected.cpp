@@ -1,63 +1,47 @@
-class Disjoint{
-    vector<int>parent,rank;
-
-    public:
-        Disjoint(int n){
-            parent.resize(n+1,0);
-            rank.resize(n+1,0);
-
-            for(int i=0;i<n+1;i++){
-                parent[i]=i;
-            }
-        }
-
-        int find(int node){
-            if(node==parent[node]) return node;
-
-            return parent[node]=find(parent[node]);
-        }
-
-        void unionbyrank(int v,int u){
-            int ult_u=find(u);
-            int ult_v=find(v);
-
-            if(rank[ult_u]>rank[ult_v]){
-                parent[ult_v]=ult_u;
-            }
-            else if(rank[ult_u]<rank[ult_v])
-                parent[ult_u]=ult_v;
-            else{
-                parent[ult_u]=ult_v;
-                rank[ult_v]++;
-            }
-        }
-};
 class Solution {
 public:
+    vector<int>parent;
+    vector<int>rank;
+
+    int find(int i,vector<int>&parent){
+        if(i==parent[i]) return i;
+
+        return parent[i]=find(parent[i],parent);
+    }
+
+    void Union(int a,int b){
+        int parent_a=find(a,parent);
+        int parent_b=find(b,parent);
+
+        if(parent_a==parent_b) return ;
+
+        if(rank[parent_a]>rank[parent_b]){
+            parent[parent_b]=parent_a;
+        }
+        else if(rank[parent_b]>rank[parent_a]){
+            parent[parent_a]=parent_b;
+        }else{
+            parent[parent_a]=parent_b;
+            rank[parent_b]++;
+        }
+    }
     int makeConnected(int n, vector<vector<int>>& connections) {
-        
-        Disjoint Ds(n);
-        int extra=0;
+        parent.resize(n);
+        rank.resize(n,0);
+        for(int i=0;i<n;i++){
+            parent[i]=i;
+        }
+        int edges=connections.size();
+        if(edges < n - 1) return -1;
+
         for(auto i:connections){
             int u=i[0];
             int v=i[1];
-
-            if(Ds.find(u)==Ds.find(v))
-                extra++;
-            else{
-                Ds.unionbyrank(u,v);
+            if(find(u,parent)!=find(v,parent)){
+                Union(u,v);
+                n--;
             }
-            
         }
-
-        int components=0;
-        for(int i=0;i<n;i++){
-            if(Ds.find(i)==i) components++;
-           
-        }
-
-        if(components-1>extra) return -1;
-
-        return components-1;
+        return n-1;
     }
 };
