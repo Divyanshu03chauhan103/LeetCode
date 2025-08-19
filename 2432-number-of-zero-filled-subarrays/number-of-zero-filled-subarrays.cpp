@@ -14,7 +14,7 @@ public:
                 i=j;
                 
             }
-            else if(nums[j]==0){
+            else{
                 result+=(j-i+1);
                 j++;
             }
