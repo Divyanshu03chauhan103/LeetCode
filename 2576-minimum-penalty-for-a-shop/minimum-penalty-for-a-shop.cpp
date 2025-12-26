@@ -2,8 +2,8 @@ class Solution {
 public:
     int bestClosingTime(string customers) {
         int n = customers.size();
-        vector<int> prefix_n(n+1, 0);   
-        vector<int> suffix_y(n+1, 0);   
+        vector<int> prefix_n(100001, 0);   
+        vector<int> suffix_y(100001, 0);   
 
         
         for (int i = 0; i < n; i++) {
