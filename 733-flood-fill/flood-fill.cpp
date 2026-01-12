@@ -1,32 +1,40 @@
 class Solution {
 public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-        vector<int> delr = {-1, 0, +1, 0};
-        vector<int> delc = {0, +1, 0, -1};
-        int iniColor = image[sr][sc];
-
         
-            dfs(image, sr, sc, color, iniColor, delr, delc);
-        
-        return image;
-    }
+        queue<pair<int,int>>q;
+        int m=image.size();
+        int n=image[0].size();
+        q.push({sr,sc});
+        vector<vector<int>>dir={
+            {0,+1},{0,-1},{+1,0},{-1,0}
+        };
+        int starting_color=image[sr][sc];
+        vector<vector<int>>visited(m,vector<int>(n,0));
+        visited[sr][sc]=1;
+        while(!q.empty()){
 
-    void dfs(vector<vector<int>>& image, int sr, int sc, int color, int iniColor,
-             const vector<int>& delr, const vector<int>& delc) {
-        
-        image[sr][sc] = color;  
+            int N=q.size();
 
-        int n = image.size();
-        int m = image[0].size();
-        
-        for (int i = 0; i < 4; i++) {
-            int newRow = sr + delr[i];
-            int newCol = sc + delc[i];
+            while(N--){
+                
+                pair<int,int>curr=q.front();
+                int i=curr.first;
+                int j=curr.second;
+                image[i][j]=color;
+                q.pop();
 
-            if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m &&
-                image[newRow][newCol] == iniColor && image[newRow][newCol]!=color) {
-                dfs(image, newRow, newCol, color, iniColor, delr, delc);
+                for(auto d:dir){
+                    int new_i=i+d[0];
+                    int new_j=j+d[1];
+                    if(new_i>=0 && new_i<m && new_j>=0 && new_j<n && !visited[new_i][new_j] && image[new_i][new_j]==starting_color){
+                        q.push({new_i,new_j});
+                        visited[new_i][new_j]=1;
+                    }
+                        
+                }
             }
         }
+        return image;
     }
 };
