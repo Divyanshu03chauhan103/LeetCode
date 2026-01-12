@@ -14,9 +14,7 @@ public:
         visited[sr][sc]=1;
         while(!q.empty()){
 
-            int N=q.size();
-
-            while(N--){
+        
                 
                 pair<int,int>curr=q.front();
                 int i=curr.first;
@@ -34,7 +32,7 @@ public:
                         
                 }
             }
-        }
+        
         return image;
     }
 };
