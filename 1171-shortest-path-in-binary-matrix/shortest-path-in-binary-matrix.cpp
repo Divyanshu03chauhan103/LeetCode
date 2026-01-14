@@ -9,7 +9,7 @@ public:
 
         vector<vector<int>>dir={{1,0},{-1,0},{0,1},{0,-1},{1,1},{-1,-1},{1,-1},{-1,1}};
 
-        vector<vector<int>>distance(r,vector<int>(c,1e9));
+        vector<vector<int>>distance(r,vector<int>(c,0));
         queue<vector<int>>q;
         q.push({0,0,1});
 
@@ -28,10 +28,10 @@ public:
                 int new_r=curr_r+i[0];
                 int new_c=curr_c+i[1];
 
-                if(new_r>=0 && new_c>=0 && new_r<r && new_c<c && curr_dis+1<distance[new_r][new_c] && grid[new_r][new_c]==0){
+                if(new_r>=0 && new_c>=0 && new_r<r && new_c<c && !distance[new_r][new_c] && grid[new_r][new_c]==0){
                      if(new_r==r-1 && new_c==c-1 ) return curr_dis+1;
                     q.push({new_r,new_c,curr_dis+1});
-                    distance[new_r][new_c]=curr_dis+1;
+                    distance[new_r][new_c]=1;
 
                 }
             }
