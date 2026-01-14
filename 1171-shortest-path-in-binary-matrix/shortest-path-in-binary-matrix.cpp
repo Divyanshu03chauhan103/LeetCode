@@ -2,38 +2,38 @@ class Solution {
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
         
-        queue<pair<int,pair<int,int>>>q;
         if(grid[0][0]!=0) return -1;
 
-            q.push({1,{0,0}});
-        
-        int n =grid.size();
-        int m=grid[0].size();
+        int r=grid.size();
+        int c=grid[0].size();
 
-        vector<vector<int>>distance(n,vector<int>(m,1e9));
-        int Drow[]={-1,0,+1,0,-1,+1,+1,-1};
-        int Dcol[]={0,+1,0,-1,+1,+1,-1,-1};
+        vector<vector<int>>dir={{1,0},{-1,0},{0,1},{0,-1},{1,1},{-1,-1},{1,-1},{-1,1}};
+
+        vector<vector<int>>distance(r,vector<int>(c,1e9));
+        queue<vector<int>>q;
+        q.push({0,0,1});
+
         distance[0][0]=1;
-
         while(!q.empty()){
 
-            int row=q.front().second.first;
-            int col=q.front().second.second;
-            int dis=q.front().first;
+            vector<int>curr = q.front();
             q.pop();
-            if(row==n-1 && col==m-1) return dis;
-            for(int i=0;i<8;i++){
-                int new_row=row+Drow[i];
-                int new_col=col+Dcol[i];
-                
-                if(new_row>=0 && new_row<n&& new_col>=0&&new_col<m && grid[new_row][new_col]==0 && dis+1<distance[new_row][new_col]){
+            int curr_r=curr[0];
+            int curr_c=curr[1];
+            int curr_dis=curr[2];
 
-                    if(new_row==n-1 && new_col==m-1) return dis+1;
+            if(curr_r == r-1 && curr_c==c-1) return curr_dis;
 
-                    distance[new_row][new_col]=dis+1;
+            for(auto i:dir){
+                int new_r=curr_r+i[0];
+                int new_c=curr_c+i[1];
 
-                    q.push({dis+1,{new_row,new_col}});
-                } 
+                if(new_r>=0 && new_c>=0 && new_r<r && new_c<c && curr_dis+1<distance[new_r][new_c] && grid[new_r][new_c]==0){
+                     if(new_r==r-1 && new_c==c-1 ) return curr_dis+1;
+                    q.push({new_r,new_c,curr_dis+1});
+                    distance[new_r][new_c]=curr_dis+1;
+
+                }
             }
         }
         return -1;
