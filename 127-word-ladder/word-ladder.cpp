@@ -6,7 +6,7 @@ public:
 
         unordered_set<string>st(wordList.begin(),wordList.end());
 
-        st.erase(beginWord);
+        // st.erase(beginWord);
 
         q.push({beginWord,1});
 
