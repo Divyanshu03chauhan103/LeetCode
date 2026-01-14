@@ -1,39 +1,34 @@
 class Solution {
 public:
     int minimumEffortPath(vector<vector<int>>& heights) {
-        int n = heights.size();
-        int m = heights[0].size();
-
         
-        priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> q;
-        vector<vector<int>> difference(n, vector<int>(m, 1e9));
-        difference[0][0] = 0;
+        int r=heights.size();
+        int c=heights[0].size();
 
-       
-        int drow[] = {+1, 0, -1, 0};
-        int dcol[] = {0, +1, 0, -1};
+        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>>q;
 
-        q.push({0, {0, 0}});
+        vector<vector<int>>diff(r,vector<int>(c,1e9));
+        vector<vector<int>>dir={{0,1},{1,0},{-1,0},{0,-1}};
 
-        while (!q.empty()) {
-            int diff = q.top().first;
-            int row = q.top().second.first;
-            int col = q.top().second.second;
-            q.pop();
+        diff[0][0]=0;
 
+        q.push({0,0,0});
+        while(!q.empty()){
+            vector<int>curr=q.top();
+            int dis=curr[0];
+            int curr_r=curr[1];
+            int curr_c=curr[2];
             
-            if (row == n - 1 && col == m - 1) return diff;
-
-            for (int i = 0; i < 4; i++) {
-                int new_row = row + drow[i];
-                int new_col = col + dcol[i];
-
-                if (new_row >= 0 && new_row < n && new_col >= 0 && new_col < m) {
-                    int new_effort = max(abs(heights[row][col] - heights[new_row][new_col]), diff);
-                    
-                    if (new_effort < difference[new_row][new_col]) {
-                        difference[new_row][new_col] = new_effort;
-                        q.push({new_effort, {new_row, new_col}});
+            q.pop();
+            if(curr_r==r-1 && curr_c==c-1) return dis;
+            for(vector<int>i:dir){
+                int new_r=curr_r+i[0];
+                int new_c=curr_c+i[1];
+                if(new_r>=0 && new_c>=0 && new_c<c && new_r<r){
+                    int effort = max(abs(heights[curr_r][curr_c]-heights[new_r][new_c]),dis);
+                    if(effort<diff[new_r][new_c]){
+                        diff[new_r][new_c]=effort;
+                        q.push({effort,new_r,new_c});
                     }
                 }
             }
