@@ -1,56 +1,41 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-       
-        vector<vector<pair<int, int>>> graph(n);
-        for (auto& flight : flights) {
-            graph[flight[0]].push_back({flight[1], flight[2]});
+
+        vector<vector<pair<int,int>>> adj(n);
+        for (auto &f : flights) {
+            adj[f[0]].push_back({f[1], f[2]});
         }
+
         
-        // BFS approach with queue
-        queue<vector<int>> q;
-        q.push({0, src, 0}); // {price, node, stops}
-        
-        // Track the minimum price to reach each node
-        vector<int> minPrice(n, INT_MAX);
-        minPrice[src] = 0;
-        
-        int result = INT_MAX;
-        
-        while (!q.empty()) {
-            vector<int> current = q.front();
-            q.pop();
-            
-            int price = current[0];
-            int node = current[1];
-            int stops = current[2];
-            
-            // If destination reached, update result
-            if (node == dst) {
-                result = min(result, price);
-                continue;
-            }
-            
-          
+        vector<vector<int>> dist(n, vector<int>(k + 2, 1e9));
+        dist[src][0] = 0;
+
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+        pq.push({0, src, 0}); // {cost, node, stops}
+
+        while (!pq.empty()) {
+            auto curr = pq.top();
+            pq.pop();
+
+            int cost = curr[0];
+            int node = curr[1];
+            int stops = curr[2];
+
+            if (node == dst) return cost;
             if (stops > k) continue;
-            
-        
-            for (auto& neighbor : graph[node]) {
-                int nextNode = neighbor.first;
-                int edgePrice = neighbor.second;
-                int newPrice = price + edgePrice;
-                
+
+            for (auto &edge : adj[node]) {
+                int next = edge.first;
+                int newCost = cost + edge.second;
+
                
-                if (newPrice < result && stops <= k) {
-                   
-                    if (newPrice < minPrice[nextNode]) {
-                        minPrice[nextNode] = newPrice;
-                        q.push({newPrice, nextNode, stops + 1});
-                    }
+                if (newCost < dist[next][stops + 1]) {
+                    dist[next][stops + 1] = newCost;
+                    pq.push({newCost, next, stops + 1});
                 }
             }
         }
-        
-        return result == INT_MAX ? -1 : result;
+        return -1;
     }
 };
