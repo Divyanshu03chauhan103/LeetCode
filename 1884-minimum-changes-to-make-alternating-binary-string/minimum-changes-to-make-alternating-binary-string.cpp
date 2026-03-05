@@ -15,8 +15,8 @@ public:
             if(s[i] != (closed ? '1' : '0'))
                 result2++;
 
-            open ^= 1;
-            closed ^= 1;
+            open = !open;
+            closed = !closed;
         }
 
         return min(result1, result2);
