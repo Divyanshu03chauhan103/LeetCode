@@ -12,10 +12,10 @@ public:
                 }
             }
             
-            vector<int> currRow = matrix[row];
-            sort(currRow.begin(), currRow.end(), greater());
+            vector<int> curr_row = matrix[row];
+            sort(curr_row.begin(), curr_row.end(), greater());
             for (int i = 0; i < n; i++) {
-                ans = max(ans, currRow[i] * (i + 1));
+                ans = max(ans, curr_row[i] * (i + 1));
             }
         }
         
